@@ -1,0 +1,1 @@
+open https://http.cat/$1
