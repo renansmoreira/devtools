@@ -1,17 +1,15 @@
 syntax on
 
+set macligatures
+set guifont=Fira\ Code:h18
+
 call plug#begin('~/.vim/plugged')
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'leafgarland/typescript-vim'
 Plug 'dracula/vim', { 'name': 'dracula' }
 Plug 'editorconfig/editorconfig-vim'
-Plug 'mileszs/ack.vim'
-Plug 'pangloss/vim-javascript'
+" Plug 'mileszs/ack.vim'
 call plug#end()
-
-" Vim-Javascript configs
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_ngdoc = 1
-let g:javascript_plugin_flow = 1
 
 " Show line numbers
 set number
