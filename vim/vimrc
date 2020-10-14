@@ -1,6 +1,6 @@
 syntax on
 
-set macligatures
+"set macligatures
 set guifont=Fira\ Code:h18
 
 call plug#begin('~/.vim/plugged')
@@ -47,10 +47,6 @@ nnoremap <silent> <leader>nb :set relativenumber!<CR>
 " Make j and k move to the next row, not file line
 nnoremap j gj
 nnoremap k gk
-
-" Move to beginning/end of line
-nnoremap B ^
-nnoremap E $
 
 " Switch between tabs
 nnoremap <Leader>1 1gt

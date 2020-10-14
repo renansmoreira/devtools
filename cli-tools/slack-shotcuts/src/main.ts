@@ -15,10 +15,8 @@ try {
 }
 
 function checkConfiguration(commandText: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    if (!configuration.isValid())
-      reject(configuration.getError());
-
+  return new Promise((resolve) => {
+    configuration.configure();
     resolve(commandText);
   });
 }

@@ -1,25 +1,28 @@
-import { config } from "https://deno.land/x/dotenv/mod.ts";
 
-const envVars = config();
 const configuration = {
-  isValid: isValid,
-  getError: getError,
+  configure: configure,
   checkIfCanSendSlackMessages: () => getConfig('SEND_SLACK_MESSAGES') === 'true',
   getSlackApiToken: () => getConfig('SLACK_API_TOKEN'),
   getChannels: () => getConfig('SLACK_CHANNELS').split(' ')
 };
 
-function isValid(): boolean {
-  return configuration.getSlackApiToken() !== undefined
-    || configuration.getChannels() !== undefined;
-}
+function configure(): void {
+  if (!getConfig('SLACK_API_TOKEN')) {
+    console.warn('Slack API token not found');
+  }
 
-function getError(): (Error | null) {
-  return new Error('Invalid configurations, check your env vars');
+  if (!getConfig('SLACK_CHANNELS')) {
+    console.warn('Slack channels are not configured, messages will not be sent');
+    Deno.env.set('SEND_SLACK_MESSAGES', 'false');
+  }
+
+  if (!getConfig('SEND_SLACK_MESSAGES')) {
+    console.warn('Messages are configured to just output in shell');
+  }
 }
 
 function getConfig(name: string): string {
-  return envVars[name] || '';
+  return Deno.env.get(name) || '';
 }
 
 export default configuration;

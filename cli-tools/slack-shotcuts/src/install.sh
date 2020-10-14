@@ -1,1 +1,1 @@
-deno install --allow-net --allow-read -n sc main.ts
+deno install --allow-net --allow-read --allow-env -n sc -f main.ts
