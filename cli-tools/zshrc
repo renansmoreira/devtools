@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+export JAVA_HOME=.sdkman/candidates/java/current/bin/java
+
+export SDKMAN_DIR="/home/renansmoreira/.sdkman"
+[[ -s "/home/renansmoreira/.sdkman/bin/sdkman-init.sh" ]] && source "/home/renansmoreira/.sdkman/bin/sdkman-init.sh"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+function reload {
+	source ~/.zshrc
+}
