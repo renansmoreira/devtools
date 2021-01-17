@@ -1,1 +1,1 @@
-ln -s $1 ~/.vim
+ln -s $PWD/vimfolder ~/.vim

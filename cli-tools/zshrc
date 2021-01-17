@@ -6,8 +6,9 @@ export SDKMAN_DIR="/home/renansmoreira/.sdkman"
 [[ -s "/home/renansmoreira/.sdkman/bin/sdkman-init.sh" ]] && source "/home/renansmoreira/.sdkman/bin/sdkman-init.sh"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 
 export DEVTOOLS_HOME="$HOME/projetos/devtools"
 export CHROME_PATH="/mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe"
