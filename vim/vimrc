@@ -1,6 +1,6 @@
 syntax on
 
-"set macligatures
+set macligatures
 set guifont=Fira\ Code:h18
 
 call plug#begin('~/.vim/plugged')
@@ -10,6 +10,8 @@ Plug 'dracula/vim', { 'name': 'dracula' }
 Plug 'editorconfig/editorconfig-vim'
 " Plug 'mileszs/ack.vim'
 call plug#end()
+
+colorscheme dracula
 
 " Show line numbers
 set number

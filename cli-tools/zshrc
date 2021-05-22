@@ -18,7 +18,11 @@ function reload {
 }
 
 function edit {
-	vim $DEVTOOLS_HOME/cli-tools/zshrc
+	mvim $DEVTOOLS_HOME/cli-tools/zshrc
+}
+
+function vedit {
+	mvim ~/.vimrc
 }
 
 function hcs {
