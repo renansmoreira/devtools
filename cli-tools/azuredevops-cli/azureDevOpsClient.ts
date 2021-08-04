@@ -14,7 +14,7 @@ export class AzureDevOpsClient {
   }
 
   private get uri(): string {
-    return `https://dev.azure.com/${this.instance}/${this.teamProject}/_apis`;
+    return `https://dev.azure.com/${this.instance}/${this.teamProject}`;
   }
 
   private get authenticationToken(): string {
@@ -28,9 +28,10 @@ export class AzureDevOpsClient {
         'Authorization': `Basic ${this.authenticationToken}`
       }
     };
-    const response = await fetch(`${this.uri}/git/pullrequests?api-version=6.0`, requestOptions);
+    const response = await fetch(`${this.uri}/_apis/git/pullrequests?api-version=6.0`, requestOptions);
     const foundPullRequests = await response.json();
+
     return foundPullRequests.value.map(
-      (pullRequestToMap: any) => new PullRequest(pullRequestToMap));
+      (pullRequestToMap: any) => new PullRequest(this.uri, pullRequestToMap));
   }
 }

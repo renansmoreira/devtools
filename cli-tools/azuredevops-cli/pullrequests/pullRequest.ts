@@ -8,13 +8,13 @@ export class PullRequest {
   private targetBranch: string;
   private href: string;
 
-  constructor(pullRequestToMap: any) {
+  constructor(azureDevOpsUri: string, pullRequestToMap: any) {
     this.repository = pullRequestToMap.repository.name;
     this.title = pullRequestToMap.title;
     this.status = pullRequestToMap.status;
     this.sourceBranch = pullRequestToMap.sourceRefName.replace('refs/heads/', '');
     this.targetBranch = pullRequestToMap.targetRefName.replace('refs/heads/', '');
-    this.href = `https://dev.azure.com/solucoesdigix/Projetos/_git/${this.repository}/pullrequest/${pullRequestToMap.codeReviewId}`;
+    this.href = `${azureDevOpsUri}/_git/${this.repository}/pullrequest/${pullRequestToMap.codeReviewId}`;
   }
 
   itsFrom(repository: string): boolean {
