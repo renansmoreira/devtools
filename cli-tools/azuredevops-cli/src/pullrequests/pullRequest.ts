@@ -4,6 +4,7 @@ export class PullRequest {
   private repository: string;
   private title: string;
   private status: string;
+  private createdBy: string;
   private sourceBranch: string;
   private targetBranch: string;
   private href: string;
@@ -12,6 +13,7 @@ export class PullRequest {
     this.repository = pullRequestToMap.repository.name;
     this.title = pullRequestToMap.title;
     this.status = pullRequestToMap.status;
+    this.createdBy = pullRequestToMap.createdBy.displayName;
     this.sourceBranch = pullRequestToMap.sourceRefName.replace('refs/heads/', '');
     this.targetBranch = pullRequestToMap.targetRefName.replace('refs/heads/', '');
     this.href = `${azureDevOpsUri}/_git/${this.repository}/pullrequest/${pullRequestToMap.codeReviewId}`;
@@ -23,6 +25,7 @@ export class PullRequest {
 
   print(): void {
     console.log(this.title);
+    console.log(`Created by ${this.createdBy}`);
     this.printBranches();
     console.log(`not reviewed, ${ink.colorize(`<green>${this.status}</green>`)} - ${ink.colorize(`<blue><u>${this.href}</u></blue>`)}`);
     console.log('');
