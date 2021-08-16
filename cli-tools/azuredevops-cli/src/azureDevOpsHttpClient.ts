@@ -22,7 +22,7 @@ export class AzureDevOpsHttpClient implements AzureDevOpsClient {
     return btoa(`${this.username}:${this.personalAccessToken}`);
   }
 
-  async getPullRequests(): Promise<any> {
+  async getPullRequests(): Promise<PullRequest[]> {
     const requestOptions = {
       method: 'GET',
       headers: {
