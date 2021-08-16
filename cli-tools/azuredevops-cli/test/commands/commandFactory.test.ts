@@ -1,11 +1,11 @@
 import { assert } from 'https://deno.land/std@0.104.0/testing/asserts.ts';
-import { AzureDevOpsFakeClient } from '../azureDevOpsFakeClient.ts';
+import { AzureDevOpsClientStub } from '../azureDevOpsClientStub.ts';
 import { CommandFactory } from '../../src/commands/commandFactory.ts';
 import { Command } from '../../src/commands/command.ts';
 import { EmptyCommand } from '../../src/commands/emptyCommand.ts';
 import { PullRequestCommand } from '../../src/commands/pullRequestCommand.ts';
 
-const factory = new CommandFactory(new AzureDevOpsFakeClient());
+const factory = new CommandFactory(new AzureDevOpsClientStub());
 
 Deno.test('should create an empty factory for a unknown cli input', () => {
   const cliInput: string = 'random cli input';
