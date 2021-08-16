@@ -48,6 +48,7 @@ export class PullRequest {
   private formatBranchToPrint(): string {
     const devWarning = this._targetBranch === 'dev' ? ' ⚠️': '';
     const masterWarning = this._targetBranch === 'master' ? ' ☢️': '';
-    return `${this._sourceBranch} to ${this._targetBranch}${devWarning || masterWarning}`;
+    const branchName = devWarning || masterWarning ? `<red>${this._targetBranch}</red>` : this._targetBranch;
+    return `${this._sourceBranch} to ${branchName}${devWarning || masterWarning}`;
   }
 }
