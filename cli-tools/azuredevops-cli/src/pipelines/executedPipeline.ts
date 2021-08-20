@@ -10,7 +10,7 @@ export class ExecutedPipeline {
     this._id = executedPipelineToMap.id;
     this._name = executedPipelineToMap.name;
     this._state = executedPipelineToMap.state;
-    this._href = executedPipelineToMap?._links.web.href;
+    this._href = executedPipelineToMap._links.web.href;
   }
 
   get success(): boolean {

@@ -15,6 +15,6 @@ export class ConfigJsonProvider implements ConfigProvider {
   }
 
   getPipelineAliases(): string[] {
-    return Object.keys(this._configs);
+    return Object.keys(this._configs.pipelines);
   }
 }

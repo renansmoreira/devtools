@@ -22,7 +22,6 @@ startBot({
       console.log('Successfully connected to gateway');
     },
     async messageCreate(message) {
-      console.log(message);
       const messageCommands = messageParser.parse(message) || [];
 
       for (let command of messageCommands) {
