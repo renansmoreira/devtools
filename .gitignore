@@ -5,3 +5,6 @@
 vim/vimfolder/*
 !vim/vimfolder/ftplugin
 !vim/vimfolder/autoload
+
+# az-devops config files
+cli-tools/azuredevops-cli/config.json

@@ -1,4 +1,3 @@
-import * as ink from 'https://deno.land/x/ink/mod.ts';
 import { PullRequestReviewer } from './pullRequestReviewer.ts';
 
 export class PullRequest {
@@ -31,24 +30,37 @@ export class PullRequest {
     return this._repository === repository;
   }
 
-  print(): void {
-    console.log(ink.colorize(`<b>${this._title}</b>`));
-    console.log(ink.colorize(`<yellow>${this._createdBy}</yellow> @ ${this.formatBranchToPrint()}`));
-    this.printReviewers();
-    console.log(ink.colorize(`<green>${this._status}</green> - <blue><u>${this._href}</u></blue>`));
-    console.log('');
+  get title(): string {
+    return this._title;
   }
 
-  private printReviewers(): void {
-    this._reviewers
-      .filter((reviewer: PullRequestReviewer) => reviewer.checkIfCanBePrinted())
-      .forEach((reviewer: PullRequestReviewer) => reviewer.print());
+  get createdBy(): string {
+    return this._createdBy;
   }
 
-  private formatBranchToPrint(): string {
-    const devWarning = this._targetBranch === 'dev' ? ' ⚠️': '';
-    const masterWarning = this._targetBranch === 'master' ? ' ☢️': '';
-    const branchName = devWarning || masterWarning ? `<red>${this._targetBranch}</red>` : this._targetBranch;
-    return `${this._sourceBranch} to ${branchName}${devWarning || masterWarning}`;
+  get targetBranchWarnIsNeeded(): boolean {
+    return this._targetBranch === 'dev' || this._targetBranch === 'master';
+  }
+
+  get sourceBranch(): string {
+    return this._sourceBranch;
+  }
+
+  get targetBranch(): string {
+    const devWarning = this._targetBranch === 'dev' ? '⚠️': '';
+    const masterWarning = this._targetBranch === 'master' ? '☢️': '';
+    return `${this._targetBranch} ${devWarning || masterWarning}`;
+  }
+
+  get reviewers(): PullRequestReviewer[] {
+    return this._reviewers;
+  }
+
+  get status(): string {
+    return this._status;
+  }
+
+  get href(): string {
+    return this._href;
   }
 }

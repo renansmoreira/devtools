@@ -1,0 +1,6 @@
+{
+  "pipelines": {
+    "pipeName": "pipeId",
+    "anotherPipeName": "anotherPipeId"
+  }
+}

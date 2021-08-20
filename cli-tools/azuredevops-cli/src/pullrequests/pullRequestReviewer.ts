@@ -13,7 +13,11 @@ export class PullRequestReviewer {
     return this._name.indexOf('[Projetos]') <= -1;
   }
 
-  print(): void {
-    console.log(`${this._vote.description} by ${this._name}`);
+  get voteDescription(): string {
+    return this._vote.description;
+  }
+
+  get name(): string {
+    return this._name;
   }
 }

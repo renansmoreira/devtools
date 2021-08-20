@@ -1,8 +1,9 @@
 import { Command } from './command.ts';
-import { AzureDevOpsClient } from '../azureDevOpsClient.ts'
-import { PullRequestsPrinter } from '../pullrequests/pullRequestsPrinter.ts';
+import { Service } from './service.ts';
+import { ServiceResponse } from './serviceResponse.ts';
+import { AzureDevOpsClient } from '../infra/azureDevOpsClient.ts'
 
-export class PullRequestCommand implements Command {
+export class PullRequestService implements Service<ServiceResponse> {
   private azureDevOpsClient: AzureDevOpsClient;
 
   constructor(azureDevOpsClient: AzureDevOpsClient) {
@@ -13,8 +14,8 @@ export class PullRequestCommand implements Command {
     return (Deno.env.get('AZURE_DEVOPS_DESIRED_REPOSITORIES') || '').split(',');
   }
 
-  async execute(): Promise<void> {
+  async execute(command: Command): Promise<ServiceResponse> {
     const desiredPullRequests = await this.azureDevOpsClient.getPullRequests();
-    new PullRequestsPrinter(this.desiredRepositories).print(desiredPullRequests);
+    return new ServiceResponse(desiredPullRequests);
   }
 }
