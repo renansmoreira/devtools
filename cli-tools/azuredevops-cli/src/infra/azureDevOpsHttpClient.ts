@@ -1,4 +1,5 @@
 import { AzureDevOpsClient } from './azureDevOpsClient.ts';
+import { ConfigProvider } from '../configs/configProvider.ts';
 import { PullRequest } from '../pullrequests/pullRequest.ts';
 import { ExecutedPipeline } from '../pipelines/executedPipeline.ts';
 import { Pipeline } from '../pipelines/pipeline.ts';
@@ -15,11 +16,11 @@ export class AzureDevOpsHttpClient implements AzureDevOpsClient {
   private personalAccessToken: string;
   private _pipelineMapper: PipelineMapper;
 
-  constructor(pipelineMapper: PipelineMapper) {
-    this.instance = Deno.env.get('AZURE_DEVOPS_INSTANCE') || '';
-    this.teamProject = Deno.env.get('AZURE_DEVOPS_TEAM_PROJECT') || '';
-    this.username = Deno.env.get('AZURE_DEVOPS_USERNAME') || '';
-    this.personalAccessToken = Deno.env.get('AZURE_DEVOPS_PAT') || '';
+  constructor(configProvider: ConfigProvider, pipelineMapper: PipelineMapper) {
+    this.instance = configProvider.azureDevOpsInstance;
+    this.teamProject = configProvider.azureDevOpsTeamProject;
+    this.username = configProvider.azureDevOpsUsername;
+    this.personalAccessToken = configProvider.azureDevOpsPersonalAccessToken;
     this._pipelineMapper = pipelineMapper;
   }
 

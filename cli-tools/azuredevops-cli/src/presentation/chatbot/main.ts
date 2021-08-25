@@ -18,21 +18,21 @@ import { DiscordMessage } from './discordMessage.ts';
  *  */
 
 const pipelineMapper = new PipelineMapper();
-const azureDevOpsClient = new AzureDevOpsHttpClient(pipelineMapper);
 const configProvider = new ConfigJsonProvider();
+const azureDevOpsClient = new AzureDevOpsHttpClient(configProvider, pipelineMapper);
 const discordChatClient = new DiscordChatClient();
 
 const pipelineApprovalWatcher = new PipelineApprovalWatcher(azureDevOpsClient, discordChatClient);
 const pipelineWatcher = new PipelineWatcher(azureDevOpsClient, pipelineApprovalWatcher, discordChatClient);
 pipelineWatcher.startWatching();
 
-const messageParser = new MessageParser(Deno.env.get('DISCORD_BOT_PREFFIX'), [
+const messageParser = new MessageParser(configProvider.discordBotPreffix, [
   new PipelineMessageCommand(new ExecutePipelineService(
     azureDevOpsClient, configProvider), pipelineWatcher, configProvider)
 ]);
 
 startBot({
-  token: Deno.env.get('DISCORD_BOT_TOKEN') || '',
+  token: configProvider.discordBotToken,
   intents: ['Guilds', 'GuildMessages', 'GuildMessageReactions'],
   eventHandlers: {
     ready() {

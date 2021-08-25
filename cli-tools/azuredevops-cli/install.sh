@@ -1,1 +1,1 @@
-deno install --allow-net --allow-env --allow-read -n ad -f src/presentation/cli/main.ts
+deno install --allow-net --allow-read -n ad -f src/presentation/cli/main.ts

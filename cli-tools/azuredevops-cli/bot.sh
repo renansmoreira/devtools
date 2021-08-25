@@ -1,1 +1,1 @@
-deno run --allow-net --allow-env --allow-read src/presentation/chatbot/main.ts
+deno run --allow-net --allow-read src/presentation/chatbot/main.ts
