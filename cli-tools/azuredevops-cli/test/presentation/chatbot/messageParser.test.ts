@@ -3,7 +3,6 @@ import { MessageCommandStub } from './messageCommandStub.ts';
 import { MessageParser } from '../../../src/presentation/chatbot/messageParser.ts';
 
 const parser = new MessageParser();
-const botPreffix = parser.botPreffix;
 
 Deno.test('should check if the message contains the bot preffix for a command', () => {
   const message = `bot random text after`;
@@ -51,7 +50,7 @@ Deno.test('should check for a missing bot preffix in a empty message', () => {
 });
 
 Deno.test('should check for a missing bot preffix in a null message', () => {
-  const nullMessage: any = null;
+  const nullMessage = null as unknown as string;
   const expectedResult = false;
 
   const result: boolean = parser.containsBotCommandPrefix(nullMessage);
@@ -60,7 +59,7 @@ Deno.test('should check for a missing bot preffix in a null message', () => {
 });
 
 Deno.test('should check for a missing bot preffix in a undefined message', () => {
-  const undefinedMessage: any = undefined;
+  const undefinedMessage: string = undefined as unknown as string;
   const expectedResult = false;
 
   const result: boolean = parser.containsBotCommandPrefix(undefinedMessage);

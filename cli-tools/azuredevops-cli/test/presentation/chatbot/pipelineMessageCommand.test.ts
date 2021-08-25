@@ -1,9 +1,6 @@
 import { assert, assertEquals } from 'https://deno.land/std@0.104.0/testing/asserts.ts';
 import { SpyService } from '../../services/spyService.ts';
 import { ConfigProviderStub } from '../../configs/configProviderStub.ts';
-import { ExecutedPipeline } from '../../../src/pipelines/executedPipeline.ts';
-import { ServiceResponse } from '../../../src/services/serviceResponse.ts';
-import { Command } from '../../../src/services/command.ts';
 import { PipelineMessageCommand } from '../../../src/presentation/chatbot/messagecommands/pipelineMessageCommand.ts';
 import { DiscordMessage } from '../../../src/presentation/chatbot/discordMessage.ts';
 
@@ -46,7 +43,7 @@ Deno.test('should execute returning a simple response message with the execution
   const expectedMessage = 'Running pipeline random name @ random href';
   command.parse('pipeline anotherpipename branch-name');
 
-  const responseMessage: any = await command.execute(discordMessage);
+  const responseMessage = await command.execute(discordMessage);
 
   assertEquals(responseMessage.content, expectedMessage);
 });

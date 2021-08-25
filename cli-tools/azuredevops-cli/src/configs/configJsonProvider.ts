@@ -5,7 +5,9 @@ export class ConfigJsonProvider implements ConfigProvider {
   private _configs: any;
 
   constructor() {
-    const configPath = path.join(path.fromFileUrl(import.meta.url), '..', '..', '..', 'config.json');
+    // TODO: Add fallback to another default config.json if necessary
+    const configPath = path.join(path.fromFileUrl(import.meta.url),
+      '..', '..', '..', 'config.json');
     const configData = Deno.readTextFileSync(configPath);
     this._configs = JSON.parse(configData);
   }

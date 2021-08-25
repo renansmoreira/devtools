@@ -14,7 +14,7 @@ export class PullRequestService implements Service<ServiceResponse> {
     return (Deno.env.get('AZURE_DEVOPS_DESIRED_REPOSITORIES') || '').split(',');
   }
 
-  async execute(command: Command): Promise<ServiceResponse> {
+  async execute(_command: Command): Promise<ServiceResponse> {
     const desiredPullRequests = await this.azureDevOpsClient.getPullRequests();
     return new ServiceResponse(desiredPullRequests);
   }

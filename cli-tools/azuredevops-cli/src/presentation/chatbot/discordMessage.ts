@@ -2,7 +2,7 @@ import { CreateMessage, MessageReference } from 'https://deno.land/x/discordeno/
 
 export class DiscordMessage {
   private _id: number;
-  private _channelId: number;
+  private _channelId: bigint;
   private _guildId: number;
 
   constructor(messageToMap: any) {
@@ -31,7 +31,7 @@ export class DiscordMessage {
     };
   }
   
-  get channelId(): number {
+  get channelId(): bigint {
     return this._channelId;
   }
 }

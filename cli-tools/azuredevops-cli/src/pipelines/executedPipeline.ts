@@ -1,6 +1,6 @@
 export class ExecutedPipeline {
   private _success: boolean;
-  private _id: string;
+  private _id: number;
   private _name: string;
   private _state: string;
   private _href: string;
@@ -17,7 +17,7 @@ export class ExecutedPipeline {
     return this._success;
   }
 
-  get id(): string {
+  get id(): number {
     return this._id;
   }
 

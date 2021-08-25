@@ -23,7 +23,7 @@ export class ExecutePipelineService implements Service<ExecutedPipeline> {
     if (!pipelineId) {
       console.error(`No pipeline named "${pipelineName}" was found`);
       // TODO: Add some overload to this guy
-      return new ExecutedPipeline(false, '', {} as any);
+      return new ExecutedPipeline(false, '', {});
     }
 
     return await this._azureDevOpsClient.runPipeline(pipelineId, branchName);
