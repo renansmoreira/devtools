@@ -5,7 +5,7 @@ import { ConfigJsonProvider } from '../../configs/configJsonProvider.ts';
 import { DiscordChatClient } from '../../infra/discordChatClient.ts';
 import { PipelineWatcher } from '../../pipelines/pipelineWatcher.ts';
 import { PipelineApprovalWatcher } from '../../pipelines/pipelineApprovalWatcher.ts';
-import { ExecutePipelineService } from '../../services/executePipelineService.ts';
+import { ExecutePipeline } from '../../core/pipelines/executePipeline.ts';
 import { MessageParser } from './messageParser.ts';
 import { MessageCommand } from './messagecommands/messageCommand.ts';
 import { PipelineMessageCommand } from './messagecommands/pipelineMessageCommand.ts';
@@ -27,8 +27,8 @@ const pipelineWatcher = new PipelineWatcher(azureDevOpsClient, pipelineApprovalW
 pipelineWatcher.startWatching();
 
 const messageParser = new MessageParser(configProvider.discordBotPreffix, [
-  new PipelineMessageCommand(new ExecutePipelineService(
-    azureDevOpsClient, configProvider), pipelineWatcher, configProvider)
+  new PipelineMessageCommand(new ExecutePipeline(
+    azureDevOpsClient, configProvider), configProvider, pipelineWatcher)
 ]);
 
 startBot({

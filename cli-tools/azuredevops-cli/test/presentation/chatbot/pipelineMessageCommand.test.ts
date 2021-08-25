@@ -2,6 +2,7 @@ import { assert, assertEquals } from 'https://deno.land/std@0.104.0/testing/asse
 import { SpyService } from '../../services/spyService.ts';
 import { ConfigProviderStub } from '../../configs/configProviderStub.ts';
 import { PipelineMessageCommand } from '../../../src/presentation/chatbot/messagecommands/pipelineMessageCommand.ts';
+import { ExecutePipelineCommand } from '../../../src/core/pipelines/executePipelineCommand.ts';
 import { DiscordMessage } from '../../../src/presentation/chatbot/discordMessage.ts';
 
 const spyService = new SpyService({
@@ -55,15 +56,18 @@ Deno.test('should execute using the correct pipeline service command', async () 
 
   await command.execute(discordMessage);
 
-  assertEquals(spyService.commandUsed.content, expectedCommandContent);
+  const commandUsed: ExecutePipelineCommand = spyService.commandUsed as ExecutePipelineCommand;
+  assertEquals(commandUsed.pipelineName, 'anotherpipename');
+  assertEquals(commandUsed.branchName, 'branch-name');
 });
 
 Deno.test('should execute using the correct pipeline service command with another params', async () => {
   const discordMessage = new DiscordMessage({});
-  const expectedCommandContent = [ 'pipename', 'another-branch-name' ];
   command.parse('pipeline pipename another-branch-name');
 
   await command.execute(discordMessage);
 
-  assertEquals(spyService.commandUsed.content, expectedCommandContent);
+  const commandUsed: ExecutePipelineCommand = spyService.commandUsed as ExecutePipelineCommand;
+  assertEquals(commandUsed.pipelineName, 'pipename');
+  assertEquals(commandUsed.branchName, 'another-branch-name');
 });

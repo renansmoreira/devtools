@@ -20,4 +20,28 @@ export class ConfigProviderStub implements ConfigProvider {
   getPipelineAliases(): string[] {
     return this._fakeConfigs.pipelineAliases;
   }
+
+  get azureDevOpsInstance(): string {
+    return '';
+  }
+
+  get azureDevOpsTeamProject(): string {
+    return '';
+  }
+
+  get azureDevOpsUsername(): string {
+    return '';
+  }
+
+  get azureDevOpsPersonalAccessToken(): string {
+    return '';
+  }
+
+  get discordBotToken(): string {
+    return '';
+  }
+
+  get discordBotPreffix(): string {
+    return '';
+  }
 }

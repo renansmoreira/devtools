@@ -1,8 +1,8 @@
 import { Service } from '../../src/services/service.ts';
-import { Command } from '../../src/services/command.ts';
+import { Command } from '../../src/core/command.ts';
 
 export class SpyService implements Service<any> {
-  private _commandUsed: Command = new Command();
+  private _commandUsed?: Command;
 
   constructor(
     private _response: any = {}) {
@@ -13,7 +13,7 @@ export class SpyService implements Service<any> {
     return Promise.resolve(this._response);
   }
 
-  get commandUsed(): Command {
+  get commandUsed(): Command | undefined {
     return this._commandUsed;
   }
 }

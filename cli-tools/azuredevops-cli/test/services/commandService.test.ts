@@ -8,7 +8,7 @@ import { EmptyService } from '../../src/services/emptyService.ts';
 import { PullRequestService } from '../../src/services/pullRequestService.ts';
 
 const configProviderStub = new ConfigProviderStub();
-const factory = new ServiceFactory(new AzureDevOpsClientStub(), configProviderStub);
+const factory = new ServiceFactory(configProviderStub, new AzureDevOpsClientStub());
 
 Deno.test('should create an empty factory for a unknown cli input', () => {
   const cliInput: string = 'random cli input';
