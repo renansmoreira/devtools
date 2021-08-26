@@ -2,7 +2,7 @@ export type AzureDevOpsConfig = {
   instance: string;
   teamProject: string;
   username: string;
-  pat: string;
+  pats: { [key: string]: string };
   desiredRepositories: string[];
 };
 

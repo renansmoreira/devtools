@@ -9,6 +9,10 @@ export class AzureDevOpsClientStub implements AzureDevOpsClient {
     return Promise.resolve([]);
   }
 
+  configToken(personalAccessToken: string): AzureDevOpsClient {
+    return this;
+  }
+
   getPipeline(pipelineId: string): Promise<Pipeline> {
     return Promise.resolve({} as Pipeline);
   }

@@ -33,12 +33,12 @@ export class ConfigProviderStub implements ConfigProvider {
     return '';
   }
 
-  get azureDevOpsPersonalAccessToken(): string {
-    return '';
-  }
-
   get azureDevOpsDesiredRepositories(): string[] {
     return [];
+  }
+
+  getUserPat(userId: string): string | undefined {
+    return this._configs.azureDevOps.pats[userId];
   }
 
   get discordBotToken(): string {

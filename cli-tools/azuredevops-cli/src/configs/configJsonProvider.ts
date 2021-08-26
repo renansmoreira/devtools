@@ -25,10 +25,6 @@ export class ConfigJsonProvider implements ConfigProvider {
     return this._configs.azureDevOps.username;
   }
 
-  get azureDevOpsPersonalAccessToken(): string {
-    return this._configs.azureDevOps.pat;
-  }
-
   get azureDevOpsDesiredRepositories(): string[] {
     return this._configs.azureDevOps.desiredRepositories || [];
   }
@@ -39,6 +35,10 @@ export class ConfigJsonProvider implements ConfigProvider {
 
   get discordBotPreffix(): string {
     return this._configs.discord.botPreffix;
+  }
+
+  getUserPat(userId: string): string | undefined {
+    return this._configs.azureDevOps.pats[userId];
   }
 
   getPipelineId(pipelineAlias: string): string {

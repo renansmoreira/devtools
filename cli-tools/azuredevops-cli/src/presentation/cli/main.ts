@@ -14,8 +14,6 @@ const [operation, arg1, arg2] = Deno.args;
     .create(operation)
     .execute(new Command([ arg1, arg2 ]));
 
-  console.log(response);
-
   // TODO: Refactor to remove all ifs
   if (operation === 'pr') {
     const desiredRepositories = configJsonProvider.azureDevOpsDesiredRepositories;

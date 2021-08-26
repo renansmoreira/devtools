@@ -28,7 +28,7 @@ const pipelineWatcher = new PipelineWatcher(azureDevOpsClient, pipelineApprovalW
 pipelineWatcher.startWatching();
 
 const messageParser = new MessageParser(configProvider.discordBotPreffix, [
-  new PipelineMessageCommand(new TokenService(), new ExecutePipeline(
+  new PipelineMessageCommand(new TokenService(configProvider), new ExecutePipeline(
     azureDevOpsClient, configProvider), configProvider, pipelineWatcher)
 ]);
 

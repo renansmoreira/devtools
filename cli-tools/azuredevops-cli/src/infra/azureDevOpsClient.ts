@@ -4,6 +4,8 @@ import { PipelineApproval } from '../pipelines/pipelineApproval.ts';
 import { ExecutedPipeline } from '../pipelines/executedPipeline.ts';
 
 export interface AzureDevOpsClient {
+  configToken(personalAccessToken: string): AzureDevOpsClient;
+
   getPullRequests(): Promise<PullRequest[]>;
 
   getPipeline(pipelineId: string): Promise<Pipeline>;

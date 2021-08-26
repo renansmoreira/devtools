@@ -25,6 +25,8 @@ export class ExecutePipeline implements Service<ExecutedPipeline> {
       return new ExecutedPipeline(false, '', {});
     }
 
-    return await this._azureDevOpsClient.runPipeline(pipelineId, command.branchName);
+    return await this._azureDevOpsClient
+      .configToken(command.personalAccessToken)
+      .runPipeline(pipelineId, command.branchName);
   }
 }

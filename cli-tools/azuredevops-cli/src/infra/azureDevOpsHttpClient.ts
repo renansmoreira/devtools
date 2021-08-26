@@ -13,33 +13,20 @@ export class AzureDevOpsHttpClient implements AzureDevOpsClient {
   private instance: string;
   private teamProject: string;
   private username: string;
-  private personalAccessToken: string;
+  private personalAccessToken = '';
   private _pipelineMapper: PipelineMapper;
 
   constructor(configProvider: ConfigProvider, pipelineMapper: PipelineMapper) {
     this.instance = configProvider.azureDevOpsInstance;
     this.teamProject = configProvider.azureDevOpsTeamProject;
     this.username = configProvider.azureDevOpsUsername;
-    this.personalAccessToken = configProvider.azureDevOpsPersonalAccessToken;
     this._pipelineMapper = pipelineMapper;
   }
 
-  private get uri(): string {
-    return `https://dev.azure.com/${this.instance}/${this.teamProject}`;
-  }
-
-  private get authenticationToken(): string {
-    return btoa(`${this.username}:${this.personalAccessToken}`);
-  }
-
-  private createRequestOptions(method: string): RequestInit {
-    return {
-      method: method || 'GET',
-      headers: {
-        'Authorization': `Basic ${this.authenticationToken}`,
-        'Content-Type': 'application/json',
-      }
-    };
+  // TODO: Remodel az devops client and remove this workaround
+  configToken(personalAccessToken: string): AzureDevOpsClient {
+    this.personalAccessToken = personalAccessToken;
+    return this;
   }
 
   async getPullRequests(): Promise<PullRequest[]> {
@@ -116,5 +103,23 @@ export class AzureDevOpsHttpClient implements AzureDevOpsClient {
     const executedPipelineToMap = await response.json();
 
     return new ExecutedPipeline(true, this.uri, executedPipelineToMap);
+  }
+
+  private createRequestOptions(method: string): RequestInit {
+    return {
+      method: method || 'GET',
+      headers: {
+        'Authorization': `Basic ${this.authenticationToken}`,
+        'Content-Type': 'application/json',
+      }
+    };
+  }
+
+  private get uri(): string {
+    return `https://dev.azure.com/${this.instance}/${this.teamProject}`;
+  }
+
+  private get authenticationToken(): string {
+    return btoa(`${this.username}:${this.personalAccessToken}`);
   }
 }
