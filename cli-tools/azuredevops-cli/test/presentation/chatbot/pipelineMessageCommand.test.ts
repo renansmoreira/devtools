@@ -1,9 +1,13 @@
 import { assert, assertEquals } from 'https://deno.land/std@0.104.0/testing/asserts.ts';
+import { TokenService } from '../../../src/core/auth/tokenService.ts';
 import { SpyService } from '../../services/spyService.ts';
 import { ConfigProviderStub } from '../../configs/configProviderStub.ts';
 import { PipelineMessageCommand } from '../../../src/presentation/chatbot/messagecommands/pipelineMessageCommand.ts';
 import { ExecutePipelineCommand } from '../../../src/core/pipelines/executePipelineCommand.ts';
-import { DiscordMessage } from '../../../src/presentation/chatbot/discordMessage.ts';
+import { ChatMessage } from '../../../src/chats/chatMessage.ts';
+
+class TokenServiceStub extends TokenService {
+}
 
 const spyService = new SpyService({
   name: 'random name',
@@ -13,7 +17,7 @@ const configProviderStub = new ConfigProviderStub({
   pipelineId: '',
   pipelineAliases: [ 'pipename', 'anotherpipename' ]
 });
-const command = new PipelineMessageCommand(spyService, configProviderStub);
+const command = new PipelineMessageCommand(new TokenServiceStub(), spyService, configProviderStub);
 
 Deno.test('should check if can be applied', () => {
   const fullChatMessage = 'pipeline pipename dev';
@@ -40,7 +44,7 @@ Deno.test('should parse a message with random texts between keywords and still c
 });
 
 Deno.test('should execute returning a simple response message with the execution content', async () => {
-  const discordMessage = new DiscordMessage({});
+  const discordMessage = new ChatMessage('', '', '');
   const expectedMessage = 'Running pipeline random name @ random href';
   command.parse('pipeline anotherpipename branch-name');
 
@@ -50,7 +54,7 @@ Deno.test('should execute returning a simple response message with the execution
 });
 
 Deno.test('should execute using the correct pipeline service command', async () => {
-  const discordMessage = new DiscordMessage({});
+  const discordMessage = new ChatMessage('', '', '');
   const expectedCommandContent = [ 'anotherpipename', 'branch-name' ];
   command.parse('pipeline anotherpipename branch-name');
 
@@ -62,7 +66,7 @@ Deno.test('should execute using the correct pipeline service command', async () 
 });
 
 Deno.test('should execute using the correct pipeline service command with another params', async () => {
-  const discordMessage = new DiscordMessage({});
+  const discordMessage = new ChatMessage('', '', '');
   command.parse('pipeline pipename another-branch-name');
 
   await command.execute(discordMessage);

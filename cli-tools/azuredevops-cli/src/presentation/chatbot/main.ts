@@ -2,14 +2,15 @@ import { startBot, sendMessage } from 'https://deno.land/x/discordeno/mod.ts';
 import { PipelineMapper } from '../../infra/pipelineMapper.ts';
 import { AzureDevOpsHttpClient } from '../../infra/azureDevOpsHttpClient.ts';
 import { ConfigJsonProvider } from '../../configs/configJsonProvider.ts';
+import { ChatMessage } from '../../../src/chats/chatMessage.ts';
 import { DiscordChatClient } from '../../infra/discordChatClient.ts';
 import { PipelineWatcher } from '../../pipelines/pipelineWatcher.ts';
 import { PipelineApprovalWatcher } from '../../pipelines/pipelineApprovalWatcher.ts';
+import { TokenService } from '../../core/auth/tokenService.ts';
 import { ExecutePipeline } from '../../core/pipelines/executePipeline.ts';
 import { MessageParser } from './messageParser.ts';
 import { MessageCommand } from './messagecommands/messageCommand.ts';
 import { PipelineMessageCommand } from './messagecommands/pipelineMessageCommand.ts';
-import { DiscordMessage } from './discordMessage.ts';
 
 /*
  * Ideas:
@@ -27,7 +28,7 @@ const pipelineWatcher = new PipelineWatcher(azureDevOpsClient, pipelineApprovalW
 pipelineWatcher.startWatching();
 
 const messageParser = new MessageParser(configProvider.discordBotPreffix, [
-  new PipelineMessageCommand(new ExecutePipeline(
+  new PipelineMessageCommand(new TokenService(), new ExecutePipeline(
     azureDevOpsClient, configProvider), configProvider, pipelineWatcher)
 ]);
 
@@ -39,13 +40,16 @@ startBot({
       console.log('Successfully connected to gateway');
     },
     reactionAdd(message) {
-      pipelineApprovalWatcher.approve(BigInt(message.messageId), message.emoji.name || '');
+      pipelineApprovalWatcher.approve(message.messageId.toString(), message.emoji.name || '');
     },
     async messageCreate(message) {
       const messageCommands = messageParser.parse(message) || [];
 
       for (const command of messageCommands) {
-        const createMessage = await command.execute(new DiscordMessage(message));
+        const chatMessage = new ChatMessage(message.id.toString(),
+          message.channelId.toString(), message.authorId.toString());
+        const createMessage = await command.execute(chatMessage);
+
         sendMessage(message.channelId, createMessage);
       }
     },

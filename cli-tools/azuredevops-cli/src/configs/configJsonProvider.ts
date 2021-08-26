@@ -29,6 +29,10 @@ export class ConfigJsonProvider implements ConfigProvider {
     return this._configs.azureDevOps.pat;
   }
 
+  get azureDevOpsDesiredRepositories(): string[] {
+    return this._configs.azureDevOps.desiredRepositories || [];
+  }
+
   get discordBotToken(): string {
     return this._configs.discord.botToken;
   }

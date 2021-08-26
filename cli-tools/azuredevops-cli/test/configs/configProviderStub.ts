@@ -37,6 +37,10 @@ export class ConfigProviderStub implements ConfigProvider {
     return '';
   }
 
+  get azureDevOpsDesiredRepositories(): string[] {
+    return [];
+  }
+
   get discordBotToken(): string {
     return '';
   }

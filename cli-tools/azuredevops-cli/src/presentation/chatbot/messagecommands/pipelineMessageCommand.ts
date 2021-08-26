@@ -1,6 +1,7 @@
 import { CreateMessage } from 'https://deno.land/x/discordeno/mod.ts';
 import { MessageCommand } from './messageCommand.ts';
-import { DiscordMessage } from '../discordMessage.ts';
+import { ChatMessage } from '../../../chats/chatMessage.ts';
+import { TokenService } from '../../../core/auth/tokenService.ts';
 import { Service } from '../../../services/service.ts';
 import { ExecutePipelineCommand } from '../../../core/pipelines/executePipelineCommand.ts';
 import { ExecutedPipeline } from '../../../pipelines/executedPipeline.ts';
@@ -10,14 +11,16 @@ import { ConfigProvider } from '../../../configs/configProvider.ts';
 export class PipelineMessageCommand implements MessageCommand {
   private _pipelineName = '';
   private _branchName = '';
+  private _tokenService: TokenService;
   private _executePipeline: Service<ExecutedPipeline>;
   private _pipelineWatcher: PipelineWatcher | undefined;
   private _configProvider: ConfigProvider;
 
-  constructor(executePipeline: Service<ExecutedPipeline>,
+  constructor(tokenService: TokenService, executePipeline: Service<ExecutedPipeline>,
     configProvider: ConfigProvider,
     // TODO: Remove this watcher and split responsabilities of watch from the operation
     pipelineWatcher?: PipelineWatcher) {
+    this._tokenService = tokenService;
     this._executePipeline = executePipeline;
     this._configProvider = configProvider;
     this._pipelineWatcher = pipelineWatcher;
@@ -35,15 +38,17 @@ export class PipelineMessageCommand implements MessageCommand {
       && this._pipelineName !== undefined && this._branchName !== undefined
   }
 
-  async execute(discordMessage: DiscordMessage): Promise<CreateMessage> {
-    const command = new ExecutePipelineCommand(this._pipelineName, this._branchName, 'pat');
+  async execute(chatMessage: ChatMessage): Promise<CreateMessage> {
+    const userToken = this._tokenService.getFor(chatMessage.authorId);
+    const command = new ExecutePipelineCommand(this._pipelineName, this._branchName, userToken);
     const executedPipeline = await this._executePipeline.execute(command);
 
     if (this._pipelineWatcher) {
-      this._pipelineWatcher.add(executedPipeline.id, discordMessage.channelId);
+      this._pipelineWatcher.add(executedPipeline.id.toString(), chatMessage.channelId.toString());
     }
 
-    return discordMessage
-      .createSimpleMessage(`Running pipeline ${executedPipeline.name} @ ${executedPipeline.href}`);
+    return {
+      content: `Running pipeline ${executedPipeline.name} @ ${executedPipeline.href}`
+    };
   }
 }

@@ -3,7 +3,7 @@ export type AzureDevOpsConfig = {
   teamProject: string;
   username: string;
   pat: string;
-  desiredRepositories: string;
+  desiredRepositories: string[];
 };
 
 export type DiscordConfig = {

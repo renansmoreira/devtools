@@ -9,11 +9,11 @@ export class AzureDevOpsClientStub implements AzureDevOpsClient {
     return Promise.resolve([]);
   }
 
-  getPipeline(pipelineId: number): Promise<Pipeline> {
+  getPipeline(pipelineId: string): Promise<Pipeline> {
     return Promise.resolve({} as Pipeline);
   }
 
-  getApprovals(pipelineId: number): Promise<PipelineApproval[]> {
+  getApprovals(pipelineId: string): Promise<PipelineApproval[]> {
     return Promise.resolve([]);
   }
 

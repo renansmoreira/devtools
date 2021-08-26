@@ -6,8 +6,8 @@ import { PipelineApproval } from './pipelineApproval.ts';
 export class PipelineApprovalWatcher {
   private _azureDevOpsClient: AzureDevOpsClient;
   private _chatClient: ChatClient;
-  private _approvalsToWatch: Map<bigint, {
-    channelId: bigint,
+  private _approvalsToWatch: Map<string, {
+    channelId: string,
     pipelineApproval: PipelineApproval
   }> = new Map();
 
@@ -16,13 +16,13 @@ export class PipelineApprovalWatcher {
     this._chatClient = chatClient;
   }
 
-  add(messageId: bigint, channelId: bigint, pipelineApproval: PipelineApproval): void {
+  add(messageId: string, channelId: string, pipelineApproval: PipelineApproval): void {
     this._approvalsToWatch.set(messageId, {
       channelId, pipelineApproval
     });
   }
 
-  async approve(messageId: bigint, reaction: string): Promise<void> {
+  async approve(messageId: string, reaction: string): Promise<void> {
     if (this._approvalsToWatch.has(messageId)) {
       let message = '';
       const approvalDetails = this._approvalsToWatch.get(messageId) as any;

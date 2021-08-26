@@ -6,7 +6,7 @@ export class PipelineMapper {
     const linkMap = new Map(Object.entries(build._links));
     const webHref = (linkMap.get('web') || { href: '' }).href;
 
-    const pipeline = new Pipeline(build.id, build.definition.name, webHref);
+    const pipeline = new Pipeline(build.id.toString(), build.definition.name, webHref);
     pipeline.status = build.status;
     pipeline.result = build.result;
 

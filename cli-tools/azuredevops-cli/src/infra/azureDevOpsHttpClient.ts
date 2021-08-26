@@ -51,7 +51,7 @@ export class AzureDevOpsHttpClient implements AzureDevOpsClient {
       (pullRequestToMap: unknown) => new PullRequest(this.uri, pullRequestToMap));
   }
 
-  async getPipeline(pipelineId: number): Promise<Pipeline> {
+  async getPipeline(pipelineId: string): Promise<Pipeline> {
     const response = await fetch(
       `${this.uri}/_apis/build/builds/${pipelineId}?api-version=5.1`, this.createRequestOptions('GET'));
     const foundPipeline: Build = await response.json();
@@ -59,7 +59,7 @@ export class AzureDevOpsHttpClient implements AzureDevOpsClient {
     return this._pipelineMapper.map(foundPipeline);
   }
 
-  async getApprovals(pipelineId: number): Promise<PipelineApproval[]> {
+  async getApprovals(pipelineId: string): Promise<PipelineApproval[]> {
     const response = await fetch(
       `${this.uri}/_apis/build/builds/${pipelineId}/Timeline?api-version=6.1-preview.2`, this.createRequestOptions('GET'));
     const timeline: Timeline = await response.json();

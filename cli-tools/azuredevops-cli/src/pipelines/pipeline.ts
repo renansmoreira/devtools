@@ -1,11 +1,11 @@
 export class Pipeline {
-  private _id: number;
+  private _id: string;
   private _name: string;
   private _webHref: string;
   private _status = '';
   private _result = '';
 
-  constructor(id: number, name: string, webHref: string) {
+  constructor(id: string, name: string, webHref: string) {
     this._id = id;
     this._name = name;
     this._webHref = webHref;
@@ -19,7 +19,7 @@ export class Pipeline {
     this._result = newResult;
   }
 
-  get id(): number {
+  get id(): string {
     return this._id;
   }
 

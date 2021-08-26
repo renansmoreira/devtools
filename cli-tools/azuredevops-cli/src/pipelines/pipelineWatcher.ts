@@ -8,7 +8,7 @@ export class PipelineWatcher {
   private _azureDevOpsClient: AzureDevOpsClient;
   private _pipelineApprovalWatcher: PipelineApprovalWatcher;
   private _chatClient: ChatClient;
-  private _pipelinesToWatch: Map<number, bigint> = new Map();
+  private _pipelinesToWatch: Map<string, string> = new Map();
 
   constructor(azureDevOpsClient: AzureDevOpsClient,
     pipelineApprovalWatcher: PipelineApprovalWatcher, chatClient: ChatClient) {
@@ -17,7 +17,7 @@ export class PipelineWatcher {
     this._chatClient = chatClient;
   }
 
-  add(pipelineId: number, channelId: bigint): void {
+  add(pipelineId: string, channelId: string): void {
     this._pipelinesToWatch.set(pipelineId, channelId);
   }
 
@@ -35,7 +35,7 @@ export class PipelineWatcher {
         for (const approval of approvals
           .filter((approval: PipelineApproval) => approval.isPending)) {
           const message = `A pipe ${pipeline.name} (${pipeline.webHref}) está aguardando aprovação. Para responder, reaja com:\n- ✅ para aprovar;\n- ❌ para rejeitar;\n- ⚪️  para ignorar e largar lá.`;
-          const channelId = this._pipelinesToWatch.get(pipelineId) || BigInt(0);
+          const channelId = this._pipelinesToWatch.get(pipelineId) || '';
 
           const messageId = await this._chatClient.sendMessage(channelId, message);
           this._pipelineApprovalWatcher.add(messageId, channelId, approval);

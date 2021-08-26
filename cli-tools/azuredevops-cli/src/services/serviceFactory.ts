@@ -18,7 +18,7 @@ export class ServiceFactory {
     configProvider: ConfigProvider = new ConfigJsonProvider(),
     private _azureDevOpsClient: AzureDevOpsClient = new AzureDevOpsHttpClient(configProvider, new PipelineMapper())) {
     this.availableServices = {
-      'pr': (): Service<ServiceResponse> => new PullRequestService(this._azureDevOpsClient),
+      'pr': (): Service<ServiceResponse> => new PullRequestService(this._azureDevOpsClient)
       //'pipeline': (): Service<ExecutedPipeline> => new ExecutePipelineService(this._azureDevOpsClient, configProvider) 
     };
   }
