@@ -3,6 +3,7 @@ export interface ConfigProvider {
   get azureDevOpsTeamProject(): string;
   get azureDevOpsUsername(): string;
   get azureDevOpsDesiredRepositories(): string[];
+  get azureDevOpsCliUserPat(): string;
   get discordBotToken(): string;
   get discordBotPreffix(): string;
   getUserPat(userId: string): string | undefined;

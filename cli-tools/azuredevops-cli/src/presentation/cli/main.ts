@@ -10,7 +10,7 @@ const configJsonProvider = new ConfigJsonProvider();
 const [operation, arg1, arg2] = Deno.args;
 
 (async function () {
-  const service: any = await new ServiceFactory()
+  const response: any = await new ServiceFactory()
     .create(operation)
     .execute(new Command([ arg1, arg2 ]));
 

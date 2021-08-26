@@ -15,10 +15,10 @@ export class ServiceFactory {
   private emptyServiceFactory: any = () => new EmptyService(this._azureDevOpsClient);
 
   constructor(
-    configProvider: ConfigProvider = new ConfigJsonProvider(),
-    private _azureDevOpsClient: AzureDevOpsClient = new AzureDevOpsHttpClient(configProvider, new PipelineMapper())) {
+    private _configProvider: ConfigProvider = new ConfigJsonProvider(),
+    private _azureDevOpsClient: AzureDevOpsClient = new AzureDevOpsHttpClient(_configProvider, new PipelineMapper())) {
     this.availableServices = {
-      'pr': (): Service<ServiceResponse> => new PullRequestService(this._azureDevOpsClient)
+      'pr': (): Service<ServiceResponse> => new PullRequestService(this._azureDevOpsClient, this._configProvider)
       //'pipeline': (): Service<ExecutedPipeline> => new ExecutePipelineService(this._azureDevOpsClient, configProvider) 
     };
   }

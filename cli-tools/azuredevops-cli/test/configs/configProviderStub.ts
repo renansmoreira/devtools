@@ -37,6 +37,10 @@ export class ConfigProviderStub implements ConfigProvider {
     return [];
   }
 
+  get azureDevOpsCliUserPat(): string {
+    return '';
+  }
+
   getUserPat(userId: string): string | undefined {
     return 'randompat';
   }
