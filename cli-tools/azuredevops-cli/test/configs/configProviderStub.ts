@@ -38,7 +38,7 @@ export class ConfigProviderStub implements ConfigProvider {
   }
 
   getUserPat(userId: string): string | undefined {
-    return this._configs.azureDevOps.pats[userId];
+    return 'randompat';
   }
 
   get discordBotToken(): string {

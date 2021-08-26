@@ -1,4 +1,4 @@
-import { startBot, sendMessage } from 'https://deno.land/x/discordeno/mod.ts';
+import { startBot, sendMessage, MessageReference } from 'https://deno.land/x/discordeno/mod.ts';
 import { PipelineMapper } from '../../infra/pipelineMapper.ts';
 import { AzureDevOpsHttpClient } from '../../infra/azureDevOpsHttpClient.ts';
 import { ConfigJsonProvider } from '../../configs/configJsonProvider.ts';
@@ -46,11 +46,29 @@ startBot({
       const messageCommands = messageParser.parse(message) || [];
 
       for (const command of messageCommands) {
-        const chatMessage = new ChatMessage(message.id.toString(),
-          message.channelId.toString(), message.authorId.toString());
-        const createMessage = await command.execute(chatMessage);
+        try {
+          const chatMessage = new ChatMessage(message.id.toString(),
+            message.channelId.toString(), message.authorId.toString());
+          const createMessage = await command.execute(chatMessage);
 
-        sendMessage(message.channelId, createMessage);
+          sendMessage(message.channelId, createMessage);
+        } catch(error) {
+          // TODO: Remove exception later and replace with some
+          // kind of execution status, notification or something else
+          if (error.message === 'PAT not found') {
+            const messageReference: MessageReference = {
+              messageId: message.id.toString(),
+              channelId: message.channelId.toString(),
+              guildId: message.guildId.toString(),
+              failIfNotExists: true
+            };
+
+            sendMessage(message.channelId, {
+              content: 'Mal aí, não te conheço',
+              messageReference: messageReference
+            });
+          }
+        }
       }
     },
   },

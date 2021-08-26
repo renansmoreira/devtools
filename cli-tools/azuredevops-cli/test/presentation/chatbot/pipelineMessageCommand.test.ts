@@ -17,7 +17,7 @@ const configProviderStub = new ConfigProviderStub({
   pipelineId: '',
   pipelineAliases: [ 'pipename', 'anotherpipename' ]
 });
-const command = new PipelineMessageCommand(new TokenServiceStub(), spyService, configProviderStub);
+const command = new PipelineMessageCommand(new TokenServiceStub(configProviderStub), spyService, configProviderStub);
 
 Deno.test('should check if can be applied', () => {
   const fullChatMessage = 'pipeline pipename dev';
