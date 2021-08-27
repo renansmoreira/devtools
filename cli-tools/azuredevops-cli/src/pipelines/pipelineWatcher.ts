@@ -34,7 +34,7 @@ export class PipelineWatcher {
 
         for (const approval of approvals
           .filter((approval: PipelineApproval) => approval.isPending)) {
-          const message = `A pipe ${pipeline.name} (${pipeline.webHref}) está aguardando aprovação. Para responder, reaja com:\n- ✅ para aprovar;\n- ❌ para rejeitar;\n- ⚪️  para ignorar e largar lá.`;
+          const message = `A pipe ${pipeline.name} (${pipeline.webHref}) está aguardando aprovação. Para responder, reaja com:\n- ✅ para aprovar;\n- ❌ para rejeitar;\n- 🐸 para ignorar e largar lá.`;
           const channelId = this._pipelinesToWatch.get(pipelineId) || '';
 
           const messageId = await this._chatClient.sendMessage(channelId, message);

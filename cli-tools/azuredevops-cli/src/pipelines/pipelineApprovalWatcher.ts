@@ -35,7 +35,7 @@ export class PipelineApprovalWatcher {
         message = 'Pipeline rejeitada';
         await this._azureDevOpsClient.reject(approvalDetails.pipelineApproval);
       }
-      else if (reaction === '⚪️') {
+      else if (reaction === '🐸') {
         message = 'Pipeline ignorada';
       }
 
