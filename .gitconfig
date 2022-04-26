@@ -1,0 +1,35 @@
+[user]
+	name = Renan S Moreira
+	email = renan.siravegna@gmail.com
+[pull]
+	rebase = false
+[push]
+  default = simple
+[log]
+  decorate = full
+  abbrevCommit = true
+[pager]
+	branch = false
+[diff]
+  indentHeuristic = true
+  submodule = log
+[color]
+  diff = always
+  interactive = always
+  status = always
+  branch = always
+[alias]
+  st = status
+  ci = commit
+  co = checkout
+  br = branch
+  fixup = commit --all --amend --no-edit
+  open = !open `git config remote.origin.url`
+  browse = !git open
+  up = push upstream master
+  sync = pull upstream master --rebase
+  which = !git branch | grep -i
+  daily = !sh -c 'git --no-pager log --since=yesterday --format=%s --author=Renan'
+  graph = log --graph
+  pr = "!f() { exec vsts code pr \"$@\"; }; f"
+  repo = "!f() { exec vsts code repo \"$@\"; }; f"
