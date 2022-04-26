@@ -8,10 +8,16 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'dracula/vim', { 'name': 'dracula' }
 Plug 'editorconfig/editorconfig-vim'
-" Plug 'mileszs/ack.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'preservim/nerdtree'
 call plug#end()
 
 colorscheme dracula
+
+" CoC extensions
+let g:coc_global_extensions = ['coc-tsserver', 'coc-deno']
 
 " Show line numbers
 set number
@@ -19,7 +25,7 @@ set number
 " Show line numbers relative to cursor
 set relativenumber
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/target/*,*/node_modules/**
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/target/*,*/node_modules/**,*/target/**
 set backupcopy=yes
 
 " Enable Highlight Search
@@ -75,6 +81,9 @@ noremap <Leader>tn :tabnext<CR>
 
 " Easily go to previous tab.
 noremap <Leader>tp :tabprevious<CR>
+
+" Coc actions
+noremap <Leader>b :call CocAction('jumpDefinition', 'tab drop')<CR>
 
 let g:ctrlp_custom_ignore = '*/node_modules/*|*/target/*'
 let g:ctrlp_working_path_mode = 0
