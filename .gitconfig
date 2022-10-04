@@ -3,7 +3,7 @@
 [user]
 	name = Renan S Moreira
 	email = renan.siravegna@gmail.com
-  signingkey = <PRIVATE_KEY_ID>
+  signingkey = PRIVATE_KEY_ID
 [pull]
 	rebase = false
 [push]
@@ -38,3 +38,5 @@
   repo = "!f() { exec vsts code repo \"$@\"; }; f"
 [commit]
   gpgsign = true
+[credential]
+  helper = store
