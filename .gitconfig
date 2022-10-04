@@ -1,6 +1,9 @@
+[core]
+  editor = "vim"
 [user]
 	name = Renan S Moreira
 	email = renan.siravegna@gmail.com
+  signingkey = <PRIVATE_KEY_ID>
 [pull]
 	rebase = false
 [push]
@@ -33,3 +36,5 @@
   graph = log --graph
   pr = "!f() { exec vsts code pr \"$@\"; }; f"
   repo = "!f() { exec vsts code repo \"$@\"; }; f"
+[commit]
+  gpgsign = true
